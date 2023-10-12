@@ -7,27 +7,16 @@
         <h1>
             SunMi
         </h1>
-        <div class="row">
-            <div class="col-12 col-sm-12">
-
-                    <router-link to="/open-car"> 차량점검내용</router-link>
-
-            </div>
-            <div class="col-12 col-sm-12">
-
-                    <router-link to="/open-product"> 완제품 출고의뢰서</router-link>
-
-            </div>
-            <div class="col-12 col-sm-12">
-
-                    <router-link to="/open-history"> 저장된 내용보기</router-link>
-
-            </div>
-
+        <div class="navbar">
+            <h4><router-link to="/open-car"> 차량점검내용</router-link></h4>
+            <h4> <router-link to="/open-history"> 저장된 내용보기</router-link></h4>
+            <h4><router-link to="/open-product"> 완제품출고 의뢰내용</router-link></h4>
+            <h4><router-link to="/create-product"> 완제품출고 의뢰서</router-link></h4>
+            <h4><router-link to="/open-category"> 거래처 및 제품 관리</router-link></h4>
         </div>
 
 
-        <br>
+
 
 
     </div>
@@ -35,41 +24,59 @@
 </template>
 
 <style scoped>
+.navbar {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+h4 {
+
+    margin-bottom: 50px;
+}
 h1 {
-    color: #def6ed;
+    color: #000000;
     position: absolute;
     top: 50px;
-    font-family: sans-serif;
-    font-size: 2.5em;
+    font-family: "Droid Sans Mono Dotted", sans-serif;
+    font-size: 3em;
 }
+
 
 .container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     background-size: cover;
-    height: 900px;
-    width: 100%;
-    background-image: url("../assets/1871775.jpg");
+    height: 1000px;
+    background-image: url("../assets/SunMi.com.jpg");
 }
-.col-12 {
-    font-size: 1.5em;
-    text-align: center;
-    margin-top: 50px;
+
+
+
+button {
+    background: rgba(139, 141, 141, 0.66);
+    border: none;
+    color: black;
+}
+button:hover {
+    color: #111010;
+    font-family: "Droid Sans Mono Dotted",sans-serif;
 }
 
 a {
+    border-radius: 8px;
     margin: 2px;
     border: 1px solid #6eff1f;
-    color: #def6ed;
-    padding: 5px;
+    color: #020202;
+    padding: 10px;
     text-decoration: none;
     font-family: sans-serif;
-    box-shadow: 2px 2px 6px #f10520;
+    box-shadow: 2px 2px 6px #20231f;
 }
 
 a:hover {
     border: yellow 1px solid;
-    color: red;
+    color: #20231f;
+    background: #47e16d;
 }
 </style>
