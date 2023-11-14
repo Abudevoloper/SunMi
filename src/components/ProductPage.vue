@@ -1,164 +1,147 @@
 <script>
+import "../vuex/productdownload.js"
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "ProductPage",
     methods: {
-        ...mapActions(['fetchProduct']),
-
-    },
-    computed: {
-        ...mapGetters(['getProduct']),
-
-
-    },
-
-    mounted() {
-        console.log('저장 내용을 찾았습니다')
-
-        this.fetchProduct(this.$route.params.id)
-
-    },
-    watch: {
-        "$route.params.id"() {
-            this.fetchProduct(this.$route.params.id)
+        ...mapActions(['searchProducts']),
+        searchProduct() {
+            this.searchProducts(this.form.searchProduct)
+                .then(() => {
+                    this.$router.push('/open-product')
+                })
 
         }
-    }
+    },
 
+    data() {
+        return {
+            form: {
+                searchProduct: "",
+            }
+        }
+    },
+    computed: {
+        ...mapGetters(['getProductSearch']),
+        ...mapGetters(['getHistory']),
+    },
 
 }
-const downloadLinks = document.querySelectorAll("[data-download]");
-    downloadLinks.forEach(button => {
-        const id = button.dataset.download;
-        const url = document.getElementById(id);
-        const a = document.createElement("a");
-
-        a.href = url;
-        a.download = "";
-        a.style.display = "none";
 
 
-        button.addEventListener("click", ()=> {
-            document.body.appendChild("a");
-            a.click();
-        })
-    })
 </script>
 
-<template >
+<template>
     <div id="myPage">
 
 
-    <div class="product-page mt-5">
-        <div class="row">
-            <div class="col-9"><h2>완 제 품 출 고 의 뢰 서 / <a> 차량운행일지 </a></h2></div>
-            <div class="col-1"><strong> 작성 </strong>
-                <hr>
+        <div class="product-page mt-5">
+            <div class="row">
+                <div class="col-9"><h2>완 제 품 출 고 의 뢰 서 / <a> 차량운행일지 </a></h2></div>
+                <div class="col-1"><strong> 작성 </strong>
+                    <hr>
+                </div>
+                <div class="col-1"><strong> 검토 </strong>
+                    <hr>
+                </div>
+                <div class="col-1"><strong> 승인 </strong>
+                    <hr>
+                </div>
+                <br>
             </div>
-            <div class="col-1"><strong> 검토 </strong>
-                <hr>
+            <div class="row m-0 p-0">
+                <div class="col-4"> 출고일 : <strong>{{}}</strong></div>
+                <div class="col-4">작성자 :</div>
+                <div class="col-4">차량번호 :</div>
             </div>
-            <div class="col-1"><strong> 승인 </strong>
-                <hr>
-            </div>
-            <br>
-        </div>
-        <div class="row m-0 p-0">
-            <div class="col-4">출고일 :</div>
-            <div class="col-4">작성자 :</div>
-            <div class="col-4">차량번호 :</div>
-        </div>
-        <div class="right-table">
-            <table class="position-relative-right border-1">
-                <thead>
-                <tr>
-                    <th class="product-th-border" scope="col"><p>거래처</p></th>
-                    <th class="product-th-border" scope="col"><p>폼목</p></th>
-                    <th class="product-th-border" scope="col"><p>수량(kg)</p></th>
-                    <th class="product-th-border" scope="col"><p>제조일</p></th>
-                    <th class="product-th-border" scope="col"><p>배송일</p></th>
-                    <th class="product-th-border" scope="col"><p>박스 수거량</p></th>
-                    <th class="product-th-border" scope="col"><p>반품/미배송</p></th>
-                </tr>
-                </thead>
-                <tbody v-for="product  of getProduct"
-                       v-bind:key="product">
-                <tr>
-                    <td class="product-td-border"><p>{{ product.buyperson }}</p></td>
-                    <td class="product-td-border"><p>{{ product.producttype }}</p></td>
-                    <td class="product-td-border"><p>{{ product.kg }}</p></td>
-                    <td class="product-td-border"><p>{{ product.indate }}</p></td>
-                    <td class="product-td-border"><p>{{ product.outdate }}</p></td>
-                    <td class="product-td-border"><p>{{ product.boxin }}</p></td>
-                    <td class="product-td-border"><p>{{ product.productin }}</p></td>
-                </tr>
+            <div class="right-table">
 
-                </tbody>
-            </table>
-            <table class="position-relative border-1">
-                <thead>
-                <tr>
-                    <th class="product-th-border" scope="col"><p>거래처</p></th>
-                    <th class="product-th-border" scope="col"><p>폼목</p></th>
-                    <th class="product-th-border" scope="col"><p>수량(kg)</p></th>
-                    <th class="product-th-border" scope="col"><p>제조일</p></th>
-                    <th class="product-th-border" scope="col"><p>배송일</p></th>
-                    <th class="product-th-border" scope="col"><p>박스 수거량</p></th>
-                    <th class="product-th-border" scope="col"><p>반품/미배송</p></th>
-                </tr>
-                </thead>
-                <tbody v-for="product  of getProduct"
-                       v-bind:key="product">
-                <tr >
-                    <td class="product-td-border"><p>{{ product.buyperson }}</p></td>
-                    <td class="product-td-border"><p>{{ product.producttype }}</p></td>
-                    <td class="product-td-border"><p>{{ product.kg }}</p></td>
-                    <td class="product-td-border"><p>{{ product.indate }}</p></td>
-                    <td class="product-td-border"><p>{{ product.outdate }}</p></td>
-                    <td class="product-td-border"><p>{{ product.boxin }}</p></td>
-                    <td class="product-td-border"><p>{{ product.productin }}</p></td>
-                </tr>
+                <table class="position-relative border-1">
+                    <thead>
+                    <tr>
+                        <th class="product-th_border" scope="col"><p class="p-tag">거래처</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">폼목</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">수량(kg)</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">제조일</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">배송일</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">박스 수거량</p></th>
+                        <th class="product-th_border" scope="col"><p class="p-tag">반품/미배송</p></th>
+                    </tr>
+                    </thead>
+                    <tbody v-for="product  of getProductSearch"
+                           v-bind:key="product">
 
-                </tbody>
-            </table>
+                    <tr class="col-6">
+                        <td class="product-td-border"><p class="p-tag">{{ product.buyperson }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.producttype }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.kg }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.indate }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.outdate }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.boxin }}</p></td>
+                        <td class="product-td-border"><p class="p-tag">{{ product.productin }}</p></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
+
+        <div class="bottom-box">
+            <h6>
+                운행중 차량 특이사항
+            </h6>
+            <p v-for="product  of getProductSearch" class="p-tag"
+               v-bind:key="product">{{ product.goodday }}</p>
+        </div>
     </div>
-
-
-    <div class="bottom-box">
-        <h6>
-            운행중 차량 특이사항
-        </h6>
-        <p></p>
-    </div>
-    </div>
-        <button class="button" type="button" data-download="myPage">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download"
-                 viewBox="0 2 16 16">
-                <path
-                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                <path
-                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-            </svg>
-            다운로드
-        </button>
-
-
+    <form class="search-form" @submit.prevent="searchProduct">
+        <input class="form-control w-50" type="date" placeholder="Search" v-model="form.searchProduct">
+        <input class="btn btn-outline-success p-1  m-1" type="submit" value="검색하기">
+    </form>
+    <button class="download-button position-relative" id="download2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download"
+             viewBox="0 0 16 16">
+            <path
+                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path
+                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        다운로드
+    </button>
 </template>
 
 <style>
+.position-relative.border-1 {
+    padding: 0;
+    width: 49.7%;
 
-.button {
-    margin-top: 160px;
-    margin-left: 120px;
-    border: none;
-    background: #363535;
-    color: white;
-    font-family: sans-serif;
-    border-radius: 10px;
-    padding: 4px;
+
+}
+
+.download-button {
+    top: -20px;
+    width: 140px;
+    margin-left: 380px;
+    border-radius: 8px;
+    border: 0;
+    padding: 8px;
+}
+
+.download-button:hover {
+    background: #a0ec77;
+    color: black;
+}
+
+.search-form {
+    top: 20px;
+    display: flex;
+    width: 280px;
+    position: relative;
+    left: 120px;
+    bottom: 35px;
 }
 
 a {
@@ -198,27 +181,12 @@ a {
 
 }
 
-.position-relative {
-    padding: 0;
-    width: 50.3%;
-    overflow-y: scroll;
-}
-
-.position-relative-right {
-    position: absolute;
-    margin-left: 50.3%;
-    width: 49.6%;
-    overflow-y: scroll;
-    padding: 0;
-
-}
 
 /* The scrollable part */
 
 .right-table {
+    justify-items: revert;
     max-height: 100%;
-    display: block;
-    overflow-y: scroll;
     position: relative;
     bottom: 39px;
     border-bottom: 1px solid #ddd;
@@ -229,24 +197,25 @@ tbody {
 }
 
 .product-td-border {
-    border: 1px solid #2d2d2d;
+    border: 1px solid black;
+
 }
 
 tr {
     padding: 0;
 }
 
-.product-th-border {
-    border: 1px solid #2d2d2d;
-    padding: 5px;
-
+.product-th_border {
+    padding: 4px;
+    border: 0.5px solid #000000;
+    align-content: center;
 }
 
 .product-page {
     margin-left: 120px;
-    height: 600px;
-    border-left: 1px solid #2d2d2d;
-    border-right: 3px solid #2d2d2d;
+    height: 560px;
+    border-left: 2px solid #2d2d2d;
+    border-right: 2px solid #2d2d2d;
     border-top: 2px solid #2d2d2d;
     width: 1200px;
     left: 100px;
@@ -269,16 +238,15 @@ h6 {
     border-bottom: 1px solid #2d2d2d;
 }
 
-p {
+.p-tag {
     margin: 0;
-    padding: 5px;
-    color: #0a0a0a;
     text-align: center;
+    padding: 4px;
 
 }
 
 .bottom-box {
-    position: absolute;
+    position: relative;
     background: white;
     margin-left: 120px;
     justify-items: end;

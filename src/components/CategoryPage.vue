@@ -1,5 +1,5 @@
 <template>
-    <div class="product-page mt-5">
+    <div class="create-category mt-5">
         <div class="row">
             <div class="col-9"><h2>완 제 품 출 고 의 뢰 서 / <a> 차량운행일지 </a></h2></div>
             <div class="col-1"><strong> 작성 </strong>
@@ -18,30 +18,26 @@
             <div class="col-4">작성자 :</div>
             <div class="col-4">차량번호 :</div>
         </div>
-        <div class="right-table">
-            <form class="form" @submit.prevent="flycategory">
-                <table class="position-relative border-1">
-                    <thead>
-                    <tr>
-                        <th  class="category-th-border" scope="col">거래처 추가하기</th>
-                        <th class="category-th-border" scope="col">품목 추가하기</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input  type="text" class="input" v-model="newCategory.name" placeholder="거래처" required></td>
-                        <td><input type="text" class="input" v-model="newCategory.name" placeholder="품목"></td>
-                        <button class="saving-submit">추가하기</button>
-                    </tr>
-                    </tbody>
+        <div class="right-category-page">
 
-                </table>
-            </form>
+                <div>
+                    <form class="form" @submit.prevent="flycategory">
+                        <em> 거래처 추가하기:</em><br>
+                        <input type="text" class="m-2 p-1 mb-1" v-model="newCategory.name" placeholder="거래처" required>
+                        <label class="saving-click mt-2 p-1">추가하기</label>
+                    </form>
+                </div>
+                <div class="">
+                    <form @submit.prevent="flyproduct_category">
+                        <em>품목 추가하기:</em><br> <input type="text" class="m-2 p-1 mt-0"
+                                                         v-model="newProductCategory.name" placeholder="품목" required>
+                        <label class="saving-click mt-1 p-1">추가하기</label>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
 
-
-    <div class="bottom-box">
+    <div class="box-bottom">
         <h6 class="background-fixed ">
             운행중 차량 특이사항:
         </h6>
@@ -52,7 +48,7 @@
 </template>
 <script>
 
-import {mapActions} from "vuex";
+import {mapActions,} from "vuex";
 
 export default {
     name: "CategoryPage",
@@ -60,11 +56,17 @@ export default {
         return {
             newCategory: {
                 name: "",
+            },
+            newProductCategory: {
+                name: "",
             }
         }
     },
+
     methods: {
         ...mapActions(['pushCategory']),
+        ...mapActions(['pushProductCategory']),
+
 
         flycategory() {
             this.pushCategory({
@@ -76,8 +78,20 @@ export default {
                     this.$router.push('/create-product')
                     alert("오늘의 사항 추가되었습니다")
                 })
+        },
+        flyproduct_category() {
+            this.pushProductCategory({
+                name: this.newProductCategory.name,
+
+            })
+
+                .then(() => {
+                    this.$router.push('/create-product')
+                    alert("오늘의 사항 추가되었습니다")
+                })
         }
     },
+
 
 }
 </script>
@@ -118,15 +132,12 @@ function addToSlct2(arr) {
 }
 */
 
-.form {
-    width: 50%;
-}
 
 strong {
     margin-top: 10px;
 }
 
-.saving-submit {
+.saving-click {
     position: fixed;
     background: #284127;
     border-radius: 5px;
@@ -134,20 +145,9 @@ strong {
     font-size: 2rex;
 }
 
-.saving-submit:hover {
-    background: white;
-    color: black;
-}
-
-.input {
-    width: 120px;
-    padding-top: 3px;
-    text-align: center;
-}
-
-select {
-    width: 120px;
-    padding: 4px;
+.saving-click:hover {
+    background: #3f623e;
+    color: #def6ed;
 }
 
 a {
@@ -187,38 +187,14 @@ a {
 
 }
 
-.position-relative {
-
-}
-
 
 /* The scrollable part */
 
-.right-table {
-    max-height: 500px;
-    overflow-y: scroll;
-    position: relative;
-    bottom: 39px;
-    border-bottom: 1px solid #ddd;
+.right-category-page {
+    margin-right: 1000px;
 }
 
-
-.category-th-border {
-    border: 1px solid #2d2d2d;
-    padding: 2px;
-}
-
-tr {
-    padding: 0;
-
-}
-
-.category-th-border {
-    border: 1px solid #2d2d2d;
-
-}
-
-.product-page {
+.create-category {
     margin-left: 120px;
     height: 600px;
     border-left: 1px solid #2d2d2d;
@@ -250,18 +226,13 @@ h2 {
 }
 
 p {
-
     height: 20px;
     display: inline;
     color: #0a0a0a;
-
-
 }
 
-.bottom-box {
+.box-bottom{
     text-align: center;
-    display: block;
-    overflow-y: scroll;
     position: absolute;
     background: white;
     margin-left: 120px;

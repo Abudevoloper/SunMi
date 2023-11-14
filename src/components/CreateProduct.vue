@@ -1,5 +1,75 @@
+<script>
+import {mapActions, mapGetters} from "vuex";
+
+export default {
+    name: "ProductPage",
+
+    data() {
+        return {
+            newProduct: {
+                buyperson: "",
+                producttype: "",
+                kg: " kg",
+                indate: "",
+                outdate: "",
+                boxin: "",
+                productin: "",
+                goodday: "",
+            }
+        }
+    },
+    methods: {
+        ...mapActions(['pushProduct']),
+        ...mapActions(['pushCategory']),
+        ...mapActions(['pushProductCategory']),
+        ...mapActions(['fetchCategory']),
+        ...mapActions(['fetchProductCategory']),
+
+        flyproduct() {
+            this.pushProduct({
+                buyperson: this.newProduct.buyperson,
+                producttype: this.newProduct.producttype,
+                kg: this.newProduct.kg,
+                indate: this.newProduct.indate,
+                outdate: this.newProduct.outdate,
+                boxin: this.newProduct.boxin,
+                productin: this.newProduct.productin,
+                goodday: this.newProduct.goodday,
+
+            })
+
+                .then(() => {
+                    this.$router.push('/open-product')
+                    alert("오늘의 사항 추가되었습니다")
+                })
+        }
+    },
+    computed: {
+        ...mapGetters(['getCategory']),
+        ...mapGetters(['getProductCategory']),
+
+
+    },
+    mounted() {
+        console.log('저장 내용을 찾았습니다')
+
+        this.fetchCategory(this.$route.params.id)
+        this.fetchProductCategory(this.$route.params.id)
+
+
+    },
+    watch: {
+        '$route.params.id'() {
+            this.fetchCategory(this.$route.params.id)
+            this.fetchProductCategory(this.$route.params.id)
+        },
+    }
+}
+
+</script>
+
 <template>
-    <div class="product-page mt-5">
+    <div class="product-category mt-5">
         <div class="row">
             <div class="col-9"><h2>완 제 품 출 고 의 뢰 서 / <a> 차량운행일지 </a></h2></div>
             <div class="col-1"><strong> 작성 </strong>
@@ -18,46 +88,62 @@
             <div class="col-4">작성자 :</div>
             <div class="col-4">차량번호 :</div>
         </div>
-        <div class="right-table">
+        <div class="right-category">
             <form @submit.prevent="flyproduct">
                 <table class="position-relative border-1">
                     <thead>
                     <tr>
-                        <th class="product-th-border" scope="col"><p>거래처</p></th>
-                        <th class="product-th-border" scope="col"><p>폼목</p></th>
-                        <th class="product-th-border" scope="col"><p>수량(kg)</p></th>
-                        <th class="product-th-border" scope="col"><p>제조일</p></th>
-                        <th class="product-th-border" scope="col"><p>배송일</p></th>
-                        <th class="product-th-border" scope="col"><p>박스 수거량</p></th>
-                        <th class="product-th-border" scope="col"><p>반품/미배송</p></th>
-                        <th class="product-th-border" scope="col"><p>특이 사항</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">거래처</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">폼목</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">수량(kg)</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">제조일</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">배송일</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">박스 수거량</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">반품/미배송</p></th>
+                        <th class="product-th" scope="col"><p class="p_tag">특이 사항</p></th>
 
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td >
-                            <select v-model="newProduct.categoryId">
-                                <option value="/api/categories/1">무주하나로</option>
-                                <option value="/api/categories/2">영동유치원</option>
-                            </select>
-                        </td>
-
                         <td>
-                            <select  aria-label="Default select example" v-model="newProduct.producttype">
-                                <option>포/국</option>
+                            <select
+                                v-model="newProduct.buyperson">
+                                <option v-for="category of getCategory"
+                                        v-bind:key="category"> {{ category.name }}
+                                </option>
+
                             </select>
                         </td>
-                        <td><input type="text" v-model="newProduct.kg"></td>
-                        <td><input type="date" v-model="newProduct.indate"></td>
-                        <td><input type="date" v-model="newProduct.outdate"></td>
-                        <td><input type="text" v-model="newProduct.boxin"></td>
-                        <td><input type="text" v-model="newProduct.productin"></td>
-                        <td><input type="text" v-model="newProduct.goodday"></td>
-                        <button class="saving-button">등록하기</button>
+                        <td>
+                            <select v-model="newProduct.producttype">
+                                <option v-for="product_category of getProductCategory"
+                                        v-bind:key="product_category">{{ product_category.name }}
+                                </option>
+                            </select>
+                        </td>
+                        <td><input id="create-input" type="text" v-model="newProduct.kg" required></td>
+                        <td><input id="create-input" type="date" v-model="newProduct.indate" required></td>
+                        <td><input id="create-input" type="date" v-model="newProduct.outdate" required></td>
+                        <td><input id="create-input" type="text" v-model="newProduct.boxin"></td>
+                        <td><input id="create-input" type="text" v-model="newProduct.productin"></td>
+                        <td><input id="create-input" type="text" v-model="newProduct.goodday"></td>
 
                     </tr>
-
+                    <tr>
+                        <td>
+                            <input type="text" id="create-input"  class="bg-body-secondary border-1" v-model="newProduct.buyperson" placeholder="직접 작성하기"
+                                   required>
+                        </td>
+                        <td>
+                            <input type="text" id="create-input" class="bg-body-secondary border-1" v-model="newProduct.producttype" placeholder="직접 작성하기"
+                                   required>
+                        </td>
+<!--                        <td>-->
+<!--                            <input  type="number"  id="create-input" class="bg-body-secondary border-1" v-model="newProduct.kg" required >-->
+<!--                        </td>-->
+                    </tr>
+                    <button class="saving-button">등록하기</button>
                     </tbody>
 
                 </table>
@@ -71,102 +157,22 @@
             운행중 차량 특이사항:
         </h6>
 
-        <p class="p-3 m-2"><strong> </strong> <br></p>
+        <p class="p-3 m-2" ><strong> </strong></p>
     </div>
 
 </template>
-<script>
-
-import {mapActions} from "vuex";
-
-export default {
-    name: "ProductPage",
-    data() {
-        return {
-            newProduct: {
-                buyperson: "",
-                producttype: "",
-                kg: " kg",
-                indate: "",
-                outdate: "",
-                boxin: " 개",
-                productin: " 없음",
-                goodday: "",
-                categoryId: ""
-            }
-        }
-    },
-    methods: {
-        ...mapActions(['pushProduct']),
-
-        flyproduct() {
-                this.pushProduct({
-                    buyperson: this.newProduct.buyperson,
-                    producttype: this.newProduct.producttype,
-                    kg: this.newProduct.kg,
-                    indate: this.newProduct.indate,
-                    outdate: this.newProduct.outdate,
-                    boxin: this.newProduct.boxin,
-                    productin: this.newProduct.productin,
-                    goodday: this.newProduct.goodday,
-
-                })
-
-                    .then(() => {
-                        this.$router.push('/open-product')
-                        alert("오늘의 사항 추가되었습니다")
-                    })
-            }
-    },
-
-}
-</script>
 
 
 <style>
-/*
-let location = ["무주군", "보은군"];
-let muju = ["무주하나로", "무주군청국내식당"];
-let boen = ["판동초", "보은중생고"];
-let slct1 = document.getElementById("slct1");
-let slct2 = document.getElementById("slct2");
-
-location.forEach(function addSpecies(item) {
-    let option = document.createElement("option");
-    option.text = item;
-    option.value = item;
-    slct1.appendChild(option);
-});
-slct1.onchange = function () {
-    slct2.innerHTML = "<option></option>";
-    if (this.value === "무주군") {
-        addToSlct2(muju);
-    }
-    if (this.value === "영동군") {
-        addToSlct2(boen);
-    }
-
-}
-
-function addToSlct2(arr) {
-    arr.forEach(function (item) {
-        let option = document.createElement("option");
-        option.text = item;
-        option.value = item;
-        slct2.appendChild(option);
-    });
-}
-*/
-
 
 strong {
     margin-top: 10px;
 }
 
 .saving-button {
-    position: fixed;
-    top: 152px;
-    left: 1220px;
+    position: relative;
+    bottom: 60px;
+    left: 960px;
     background: #284127;
     border-radius: 5px;
     color: white;
@@ -178,11 +184,12 @@ strong {
     color: black;
 }
 
-input {
+#create-input {
     width: 120px;
     padding: 3px;
     text-align: center;
 }
+
 select {
     width: 120px;
     padding: 4px;
@@ -232,32 +239,19 @@ a {
 
 /* The scrollable part */
 
-.right-table {
-    max-height: 500px;
-    overflow-y: scroll;
+.right-category {
     position: relative;
     bottom: 39px;
-    border-bottom: 1px solid #ddd;
-}
-
-
-.product-td-border {
-    border: 1px solid #2d2d2d;
-    padding: 2px;
-}
-
-tr {
-    padding: 0;
 
 }
 
-.product-th-border {
+.product-th {
     border: 1px solid #2d2d2d;
     padding: 5px;
 
 }
 
-.product-page {
+.product-category {
     margin-left: 120px;
     height: 600px;
     border-left: 1px solid #2d2d2d;
@@ -265,7 +259,6 @@ tr {
     border-top: 2px solid #2d2d2d;
     width: 1200px;
     left: 100px;
-    padding: 0;
     text-align: center;
     font-size: 13px;
 }
@@ -281,14 +274,14 @@ h2 {
 
 .background-fixed {
     background: white;
-    border-bottom: 1px  solid #284127;
+    border-bottom: 1px solid #284127;
     position: fixed;
     width: 1195px;
 
 
 }
 
-p {
+.p_tag {
 
     height: 20px;
     display: inline;
@@ -299,9 +292,7 @@ p {
 
 .bottom-box {
     text-align: center;
-    display: block;
-    overflow-y: scroll;
-    position: absolute;
+    position: relative;
     background: white;
     margin-left: 120px;
     justify-items: end;

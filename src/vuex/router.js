@@ -1,48 +1,50 @@
-import {createRouter, createWebHistory} from "vue-router"
+import {createRouter, createWebHistory} from "vue-router";
+import FirstPage from "@/components/FirstPage";
 
 const routes = [
+
     {
         path: '/',
-        component: function () {
-            return import ('../components/FirstPage.vue')
-        }
+        component: FirstPage
+
     },
+
 
     {
         path: '/open-car',
-        component: function () {
-            return import('../components/CarPage.vue')
-        }
-    },
+        component: () => import('../components/CarPage.vue')
+
+    }
+    ,
     {
         path: '/open-history',
-        component: function () {
-            return import('../components/SavingInformation.vue')
+        component: function() {
+           return import('../components/SavingInformation.vue');
         }
-    },
+
+    }
+    ,
     {
         path: '/open-product',
-        component: function () {
-            return import('../components/ProductPage.vue')
-        }
-    },
+        component: () => import('../components/ProductPage.vue')
+
+    }
+    ,
+
     {
         path: '/next-page',
-        component: function () {
-            return import('../components/CarPage.vue')
-        }
-    },
+        component: () => import('../components/CarPage.vue')
+    }
+    ,
     {
         path: '/create-product',
-        component: function () {
-            return import('../components/CreateProduct.vue')
-        }
-    },
+        component: () => import('../components/CreateProduct.vue')
+    }
+    ,
     {
         path: '/open-category',
-        component: function () {
-            return import('../components/CategoryPage.vue')
-        }
+        component: () => import('../components/CategoryPage.vue')
+
     }
 
 
@@ -52,5 +54,4 @@ const routes = [
 export default createRouter({
     history: createWebHistory(),
     routes,
-
 })

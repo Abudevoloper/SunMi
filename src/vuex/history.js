@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios  from "axios";
 
 export default {
     actions: {
@@ -22,8 +22,60 @@ export default {
                     })
             })
         },
+        searchProducts(context, productId) {
 
-       pushProduct(context, data) {
+            return new Promise((resolve, reject) => {
+
+                axios
+                    
+                    .get('http://localhost:9701/api/products?outdate=' + productId)
+                    .then((response) => {
+                       console.log('날짜 찾았습니다')
+                        console.log(response)
+                        let productSearchName = {
+                                models: response.data['hydra:member'],
+                                totalItems: response.data['hydra:totalItems']
+                        }
+
+
+                        context.commit('updateProductSearch', productSearchName)
+                        resolve()
+                    })
+                    .catch(() => {
+                        console.log('문제가 있습니다')
+                        reject()
+
+                    })
+            })
+        },
+        searchCarInfo(context, sun_mi_carId) {
+
+            return new Promise((resolve, reject) => {
+
+                axios
+
+                    .get('http://localhost:9701/api/sun_mi_cars?driverday=' + sun_mi_carId)
+                    .then((response) => {
+                       console.log('날짜 찾았습니다')
+                        console.log(response) ;
+
+                        let sun_mi_carSearch = {
+                                models: response.data['hydra:member'],
+                                totalItems: response.data['hydra:totalItems']
+                        }
+
+
+                        context.commit('updateHistorySearch', sun_mi_carSearch)
+                        resolve()
+                    })
+                    .catch(() => {
+                        console.log('문제가 있습니다')
+                        reject()
+
+                    })
+            })
+        },
+        pushProduct(context, data) {
 
             return new Promise((resolve, reject) => {
 
@@ -63,6 +115,26 @@ export default {
                     })
             })
         },
+        pushProductCategory(context, data) {
+
+            return new Promise((resolve, reject) => {
+
+                axios
+                    .post('http://localhost:9701/api/product_categories', data)
+                    .then((response) => {
+                        console.log('등록되었습니다')
+                        console.log(response)
+
+                        context.commit('updateProductCategory', response)
+                        resolve()
+                    })
+                    .catch(() => {
+                        console.log('문제가 있습니다')
+                        reject()
+
+                    })
+            })
+        },
         fetchHistory(context) {
 
 
@@ -77,32 +149,6 @@ export default {
                             totalItems: response.data['hydra:totalItems']
                         }
                         context.commit('updateHistory', sun_mi_cars)
-                        resolve()
-                    })
-                    .catch(() => {
-                        console.log('내용 가져오지 못했습니다')
-
-                        reject()
-                    })
-            })
-        },
-        fetchProduct(context, categoryId = null) {
-            let categoryUrl = ''
-            if (categoryUrl !==null) {
-                categoryUrl = '?category=' + categoryId
-            }
-
-            return new Promise((resolve, reject) => {
-                axios
-                    .get('http://localhost:9701/api/products' + categoryUrl)
-                    .then((response) => {
-                        console.log('저장된 내용 가져왔습니다')
-                        console.log(response)
-                        let products = {
-                            models: response.data['hydra:member'],
-                            totalItems: response.data['hydra:totalItems']
-                        }
-                        context.commit('updateProduct', products)
                         resolve()
                     })
                     .catch(() => {
@@ -134,6 +180,28 @@ export default {
                     })
             })
         },
+        fetchProductCategory(context) {
+
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('http://localhost:9701/api/product_categories')
+                    .then((response) => {
+                        console.log('저장된 내용 가져왔습니다')
+                        console.log(response)
+                        let product_categories = {
+                            models: response.data['hydra:member'],
+                            totalItems: response.data['hydra:totalItems'],
+                        }
+                        context.commit('updateProductCategory', product_categories)
+                        resolve()
+                    })
+                    .catch(() => {
+                        console.log('내용 가져오지 못했습니다')
+
+                        reject()
+                    })
+            })
+        },
 
     },
 
@@ -142,11 +210,27 @@ export default {
         updateHistory(state, sun_mi_cars) {
             state.sun_mi_car = sun_mi_cars
         },
+        updateHistoryEdit(state, sun_mi_cars) {
+            state.sun_mi_car = sun_mi_cars
+        },
         updateProduct(state, products) {
             state.product = products
-        }, updateCategory(state, categories) {
+        },
+        updateProductSearch(state, searchProduct) {
+            state.searchProduct = searchProduct
+        },
+        updateCategory(state, categories) {
             state.category = categories
         },
+        updateProductCategory(state, product_categories) {
+            state.product_category = product_categories
+        },
+        updateHistorySearch(state, sun_mi_cars) {
+            state.sun_mi_car = sun_mi_cars
+        },
+
+
+
 
     },
     state: {
@@ -154,11 +238,17 @@ export default {
             models: [],
             totalItems: 0
         },
-        product: {
+        products: {
           models: [],
             totalItems: 0
+
+
         },
         category: {
+            models: [],
+            totalItems: 0
+        },
+        product_category: {
             models: [],
             totalItems: 0
         },
@@ -174,7 +264,20 @@ export default {
             drivergoodday: null
 
         },
-        products: {
+        product_categories: {
+            name: null,
+        },
+        product: {
+            byperson: null,
+            producttype: null,
+            kg: null,
+            indate: null,
+            outdate: null,
+            boxin: null,
+            productin: null,
+            goodday: null
+        },
+        searchProduct: {
             byperson: null,
             producttype: null,
             kg: null,
@@ -185,20 +288,32 @@ export default {
             goodday: null
         },
         categories: {
-            name: null,
+            name: null
           },
+
 
     },
     getters: {
+        getHistorySearch(state) {
+            return state.sun_mi_car.models
+        },
         getHistory(state) {
             return state.sun_mi_car.models
         },
         getProduct(state) {
             return state.product.models
         },
+        getProductSearch(state) {
+            return state.searchProduct.models
+        },
         getCategory(state) {
             return state.category.models
         },
+        getProductCategory(state) {
+            return state.product_category.models
+        },
 
-    }
+
+    },
+
 }
