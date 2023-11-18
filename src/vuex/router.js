@@ -43,7 +43,7 @@ const routes = [
     ,
     {
         path: '/open-category',
-        component: () => import('../components/CategoryPage.vue')
+        component: () => import('../components/CreateCategory.vue')
 
     }
 

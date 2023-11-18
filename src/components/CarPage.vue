@@ -1,5 +1,5 @@
 <template>
-    <div class="container d-flex justify-content-center text-center ">
+    <div class="container d-flex justify-content-center text-center">
 
 
         <div class="create-information-page">
@@ -10,7 +10,7 @@
                 </svg>
 
             </router-link>
-            <h3 class="mt-3">
+            <h3 class="m-0">
                 차량 점검내용
             </h3>
 
@@ -24,7 +24,7 @@
                 <em class="p-3">주행전 (km):</em> <input  class="input-text w-50" placeholder="운행전 km" v-model="newHistory.lastkm" required><br>
                 <em class="p-3">주행후 (km):</em>  <input  class="input-text w-50" placeholder=" 주행후 km" v-model="newHistory.nextkm"><br>
                 <em class="p-4">주유금액: </em><input  class="input-text mb-4  w-50" placeholder=" 주유금액" v-model="newHistory.disel"><br>
-                <input class="text-next-drive-time col-3 " type="text" placeholder="다음 운행시 주의사항 및 점검예상사항"
+                <input class="text-next-drive-time col-3" type="text" placeholder="다음 운행시 주의사항 및 점검예상사항"
                        v-model="newHistory.drivergoodday"><br>
                 <button class="send-button" type="submit">저장하기</button><br>
 
@@ -87,11 +87,10 @@ export default {
 </script>
 
 <style scoped>
-
-em {
+.container {
 }
 .send-button {
-    margin-top: 36px;
+    margin-top: 40px;
     position: relative;
     padding: 10px  6px 10px ;
     width: 100%;
@@ -122,7 +121,7 @@ svg:hover{
     margin-top: 40px;
     border: 1px solid #284127;
     width: 360px;
-    height: 800px;
+    height: 750px;
 }
 
 .quesen {
@@ -151,7 +150,8 @@ svg:hover{
 
 .text-next-drive-time {
     width: 300px;
-    height: 100px;
+    height: 70px;
+    border: 1px #a0ec77 dashed;
 }
 
 </style>

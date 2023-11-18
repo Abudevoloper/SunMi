@@ -38,11 +38,10 @@
         </div>
 
     <div class="box-bottom">
-        <h6 class="background-fixed">
+        <h6>
             운행중 차량 특이사항:
         </h6>
-
-        <p class="p-3 m-2"><strong> </strong> <br></p>
+        <p class="p-3 m-2"></p>
     </div>
 
 </template>
@@ -216,15 +215,10 @@ h2 {
     margin-left: 130px;
     margin-bottom: 30px;
 }
-
-.background-fixed {
-    background: white;
-    border-bottom: 1px solid #284127;
-    position: fixed;
-    width: 1195px;
-
-
+h6 {
+    border-bottom: 1px solid #2d2d2d;
 }
+
 
 p {
     height: 20px;

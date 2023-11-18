@@ -93,7 +93,7 @@ export default {
             <h6>
                 운행중 차량 특이사항
             </h6>
-            <p v-for="product  of getProductSearch" class="p-tag"
+            <p v-for="product  of getProductSearch"
                v-bind:key="product">{{ product.goodday }}</p>
         </div>
     </div>
