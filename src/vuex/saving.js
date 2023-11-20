@@ -4,8 +4,8 @@ export default {
     name: "saving",
     action: {
         window: onload = function () {
-            document.getElementById("download")
-                .addEventListener("click", () => {
+            document.getElementById("download");
+                addEventListener("click", () => {
                     const history = document.getElementById("openHistory");
                     console.log(history);
                     var opt = {

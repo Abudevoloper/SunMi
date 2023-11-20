@@ -5,7 +5,7 @@ export default {
     action: {
         window:onload = function () {
             document.getElementById("download2")
-                .addEventListener("click", () => {
+                addEventListener("click", () => {
                 const myPage = document.getElementById("myPage");
                 console.log(window);
                 console.log(myPage);
