@@ -1,22 +1,16 @@
 <script>
-import "../vuex/saving.js"
 import {mapActions, mapGetters} from "vuex";
 export default {
     name: "SavingInformation",
     methods: {
         ...mapActions(['fetchHistory']),
         ...mapActions(['searchCarInfo']),
-        searchSunMiCar(reject) {
+        searchSunMiCar() {
             this.searchCarInfo(this.form.searchSunMiCar)
                 .then(() => {
                     this.$router.push('/open-history')
                 })
 
-                .catch(() => {
-                    console.log('선택한 날짜로 저장내용이 없습니다');
-                    reject();
-
-                })
         },
     },
     data() {
@@ -34,7 +28,7 @@ export default {
 }
 </script>
 
-<template>
+<template >
     <div id="openHistory">
 
         <h4 class="mt-5"> 차량 점검내용</h4>

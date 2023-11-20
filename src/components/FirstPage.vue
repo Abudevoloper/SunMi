@@ -40,12 +40,9 @@ h1 {
     justify-content: center;
     align-items: center;
     background-size: cover;
-    height: 844px;
+    height: 900px;
     background-image: url("../assets/SunMi.com.jpg");
 }
-
-
-
 
 
 a {

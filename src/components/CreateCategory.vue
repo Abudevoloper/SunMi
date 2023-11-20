@@ -24,14 +24,14 @@
                     <form class="form" @submit.prevent="flycategory">
                         <em> 거래처 추가하기:</em><br>
                         <input type="text" class="m-2 p-1 mb-1" v-model="newCategory.name" placeholder="거래처" required>
-                        <label class="saving-click mt-2 p-1 ">추가하기</label>
+                        <button class="saving-click mt-2">추가하기</button>
                     </form>
                 </div>
                 <div class="w-100">
                     <form @submit.prevent="flyproduct_category">
                         <em>품목 추가하기:</em><br> <input type="text" class="m-2 p-1 mt-0"
                                                          v-model="newProductCategory.name" placeholder="품목" required>
-                        <label class="saving-click mt-1 p-1">추가하기</label>
+                        <button class="saving-click ">추가하기</button>
                     </form>
                 </div>
             </div>
@@ -137,6 +137,7 @@ strong {
 }
 
 .saving-click {
+    padding: 1px;
     width: 80px;
     position: absolute;
     background: #284127;

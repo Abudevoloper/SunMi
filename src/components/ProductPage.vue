@@ -1,5 +1,5 @@
 <script>
-import "../vuex/productdownload.js"
+import "../vuex/productdownload.js";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

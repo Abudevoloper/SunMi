@@ -90,9 +90,9 @@ export default {
 .container {
 }
 .send-button {
-    margin-top: 40px;
+    margin-top: 35px;
     position: relative;
-    padding: 10px  6px 10px ;
+    padding: 15px  6px 10px ;
     width: 100%;
     border: none;
     background: #c3f68f;

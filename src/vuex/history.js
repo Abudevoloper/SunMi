@@ -13,7 +13,7 @@ export default {
                         console.log(response)
 
                         context.commit('updateHistory', response)
-                        resolve()
+                        resolve();
                     })
                     .catch(() => {
                         console.log('문제가 있습니다')
