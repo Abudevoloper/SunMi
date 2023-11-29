@@ -1,4 +1,5 @@
 <script>
+import html2pdf from "html2pdf.js/src";
 import {mapActions, mapGetters} from "vuex";
 export default {
     name: "SavingInformation",
@@ -25,6 +26,20 @@ export default {
         ...mapGetters(['getHistorySearch']),
     },
 
+}
+    window.onload = function () {
+    this.document.getElementById("download")
+        .addEventListener("click", () => {
+            const history = document.getElementById("openHistory");
+            console.log(history);
+            var opt = {
+                filename: '자량점검내용.pdf',
+                html2canvas: {scale: 1},
+                jsPDF: {unit: 'pt', format: 'ledger', orientation: 'l',}
+            };
+
+            html2pdf().from(history).set(opt).save();
+        })
 }
 </script>
 

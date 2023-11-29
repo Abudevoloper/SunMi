@@ -2,10 +2,9 @@ import html2pdf from "html2pdf.js/src";
 
 export default {
     name: "productdownload",
-    action: {
-        window:onload = function () {
-            document.getElementById("download2")
-                addEventListener("click", () => {
+    window:onload = function (){
+        document.getElementById("download2")
+            .addEventListener("click", () => {
                 const myPage = document.getElementById("myPage");
                 console.log(window);
                 console.log(myPage);
@@ -14,11 +13,11 @@ export default {
                     jsPDF: {unit: 'pt', format: 'ledger', orientation: 'l',}
 
                 };
-
                 html2pdf().from(myPage).set(opt).save();
+
 
             })
 
-        }
     }
+
 }

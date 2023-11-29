@@ -9,7 +9,7 @@ export default {
         searchProduct() {
             this.searchProducts(this.form.searchProduct)
                 .then(() => {
-                    this.$router.push('/open-product')
+                    this.$router.push('/open-product');
                 })
 
         }
@@ -51,11 +51,11 @@ export default {
                 <br>
             </div>
             <div class="row m-0 p-0">
-                <div class="col-4"> 출고일 : <strong>{{}}</strong></div>
+                <div class="col-4"> 출고일 : <strong></strong></div>
                 <div class="col-4">작성자 :</div>
                 <div class="col-4">차량번호 :</div>
             </div>
-            <div class="right-table">
+            <div class="left-table">
 
                 <table class="position-relative border-1">
                     <thead>
@@ -85,7 +85,36 @@ export default {
                     </tbody>
                 </table>
             </div>
+<!--            <div class="right-table">-->
 
+<!--                <table>-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">거래처</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">폼목</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">수량(kg)</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">제조일</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">배송일</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">박스 수거량</p></th>-->
+<!--                        <th class="product-th_border" scope="col"><p class="p-tag">반품/미배송</p></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody v-for="product  of getProductSearch"-->
+<!--                           v-bind:key="product">-->
+
+<!--                    <tr class="col-6">-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.buyperson }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.producttype }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.kg }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.indate }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.outdate }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.boxin }}</p></td>-->
+<!--                        <td class="product-td-border"><p class="p-tag">{{ product.productin }}</p></td>-->
+<!--                    </tr>-->
+
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
         </div>
 
 
@@ -184,14 +213,18 @@ a {
 
 /* The scrollable part */
 
-.right-table {
+.left-table {
     justify-items: revert;
     max-height: 100%;
     position: relative;
     bottom: 39px;
-    border-bottom: 1px solid #ddd;
 }
-
+.right-table {
+    left:49.8%;
+    justify-items: revert;
+    position: relative;
+    bottom: 76px;
+}
 tbody {
 
 }
@@ -239,6 +272,7 @@ h6 {
 }
 
 .p-tag {
+    position: relative;
     margin: 0;
     text-align: center;
     padding: 4px;

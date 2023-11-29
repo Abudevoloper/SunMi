@@ -74,6 +74,7 @@ export default {
             })
 
                 .then(() => {
+
                     this.$router.push('/create-product')
                     alert("오늘의 사항 추가되었습니다")
                 })
